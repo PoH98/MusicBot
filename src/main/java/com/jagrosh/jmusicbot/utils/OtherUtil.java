@@ -37,16 +37,16 @@ import org.json.JSONTokener;
 public class OtherUtil
 {
     public final static String NEW_VERSION_AVAILABLE = "There is a new version of JMusicBot available!\n"
-                    + "Current version: %s\n"
-                    + "New Version: %s\n\n"
-                    + "Please visit https://github.com/jagrosh/MusicBot/releases/latest to get the latest release.";
+            + "Current version: %s\n"
+            + "New Version: %s\n\n"
+            + "Please visit https://github.com/jagrosh/MusicBot/releases/latest to get the latest release.";
     private final static String WINDOWS_INVALID_PATH = "c:\\windows\\system32\\";
-    
+
     /**
      * gets a Path from a String
      * also fixes the windows tendency to try to start in system32
      * any time the bot tries to access this path, it will instead start in the location of the jar file
-     * 
+     *
      * @param path the string path
      * @return the Path object
      */
@@ -64,10 +64,10 @@ public class OtherUtil
         }
         return result;
     }
-    
+
     /**
      * Loads a resource from the jar as a string
-     * 
+     *
      * @param clazz class base object
      * @param name name of resource
      * @return string containing the contents of the resource
@@ -85,10 +85,10 @@ public class OtherUtil
             return null;
         }
     }
-    
+
     /**
      * Loads image data from a URL
-     * 
+     *
      * @param url url of image
      * @return inputstream of url
      */
@@ -96,7 +96,7 @@ public class OtherUtil
     {
         if(url==null)
             return null;
-        try 
+        try
         {
             URL u = new URL(url);
             URLConnection urlConnection = u.openConnection();
@@ -106,10 +106,10 @@ public class OtherUtil
         catch(IOException | IllegalArgumentException ignore) {}
         return null;
     }
-    
+
     /**
      * Parses an activity from a string
-     * 
+     *
      * @param game the game, including the action such as 'playing' or 'watching'
      * @return the parsed activity
      */
@@ -136,12 +136,12 @@ public class OtherUtil
         }
         return Activity.playing(game);
     }
-   
+
     public static String makeNonEmpty(String str)
     {
         return str == null || str.isEmpty() ? "\u200B" : str;
     }
-    
+
     public static OnlineStatus parseStatus(String status)
     {
         if(status==null || status.trim().isEmpty())
@@ -149,28 +149,28 @@ public class OtherUtil
         OnlineStatus st = OnlineStatus.fromKey(status);
         return st == null ? OnlineStatus.ONLINE : st;
     }
-    
+
     public static void checkJavaVersion(Prompt prompt)
     {
         if(!System.getProperty("java.vm.name").contains("64"))
-            prompt.alert(Prompt.Level.WARNING, "Java Version", 
+            prompt.alert(Prompt.Level.WARNING, "Java Version",
                     "It appears that you may not be using a supported Java version. Please use 64-bit java.");
     }
-    
+
     public static void checkVersion(Prompt prompt)
     {
         // Get current version number
         String version = getCurrentVersion();
-        
+
         // Check for new version
         String latestVersion = getLatestVersion();
-        
+
         if(latestVersion!=null && !latestVersion.equals(version))
         {
             prompt.alert(Prompt.Level.WARNING, "JMusicBot Version", String.format(NEW_VERSION_AVAILABLE, version, latestVersion));
         }
     }
-    
+
     public static String getCurrentVersion()
     {
         if(JMusicBot.class.getPackage()!=null && JMusicBot.class.getPackage().getImplementationVersion()!=null)
@@ -178,7 +178,7 @@ public class OtherUtil
         else
             return "UNKNOWN";
     }
-    
+
     public static String getLatestVersion()
     {
         try

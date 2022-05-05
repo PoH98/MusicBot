@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Main-Class: com.jagrosh.jmusicbot.JMusicBot
+Class-Path: okhttp-3.13.0.jar jna-4.4.0.jar jda-utilities-command-3.0.5.
+ jar opus-java-natives-1.1.0.jar jackson-annotations-2.10.1.jar httpclie
+ nt-4.5.10.jar okio-1.17.2.jar JDA-4.3.0_324.jar commons-collections4-4.
+ 1.jar logback-core-1.2.3.jar base64-2.3.9.jar lava-common-1.1.2.jar com
+ mons-codec-1.11.jar annotations-16.0.1.jar httpcore-4.4.12.jar lavaplay
+ er-fork-1.3.97.jar jda-utilities-doc-3.0.5.jar jsr305-3.0.2.jar commons
+ -logging-1.2.jar json-20180813.jar jda-utilities-menu-3.0.5.jar jda-uti
+ lities-commons-3.0.5.jar JLyrics--6e0d97d378-1.jar jsoup-1.14.2.jar con
+ fig-1.3.2.jar slf4j-api-1.7.25.jar commons-io-2.6.jar jackson-core-2.10
+ .0.jar lavaplayer-natives-1.3.14.jar trove4j-3.0.3.jar jackson-databind
+ -2.10.1.jar logback-classic-1.2.3.jar opus-java-api-1.1.0.jar jda-utili
+ ties-oauth2-3.0.5.jar nv-websocket-client-2.14.jar jda-utilities-exampl
+ es-3.0.5.jar
+

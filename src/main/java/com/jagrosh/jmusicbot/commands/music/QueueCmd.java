@@ -36,10 +36,10 @@ import net.dv8tion.jda.api.exceptions.PermissionException;
  *
  * @author John Grosh <john.a.grosh@gmail.com>
  */
-public class QueueCmd extends MusicCommand 
+public class QueueCmd extends MusicCommand
 {
     private final Paginator.Builder builder;
-    
+
     public QueueCmd(Bot bot)
     {
         super(bot);
@@ -79,7 +79,7 @@ public class QueueCmd extends MusicCommand
             Message built = new MessageBuilder()
                     .setContent(event.getClient().getWarning() + " There is no music in the queue!")
                     .setEmbeds((nowp==null ? nonowp : nowp).getEmbeds().get(0)).build();
-            event.reply(built, m -> 
+            event.reply(built, m ->
             {
                 if(nowp!=null)
                     bot.getNowplayingHandler().setLastNPMessage(m);
@@ -99,10 +99,10 @@ public class QueueCmd extends MusicCommand
                 .setItems(songs)
                 .setUsers(event.getAuthor())
                 .setColor(event.getSelfMember().getColor())
-                ;
+        ;
         builder.build().paginate(event.getChannel(), pagenum);
     }
-    
+
     private String getQueueTitle(AudioHandler ah, String success, int songslength, long total, RepeatMode repeatmode)
     {
         StringBuilder sb = new StringBuilder();
