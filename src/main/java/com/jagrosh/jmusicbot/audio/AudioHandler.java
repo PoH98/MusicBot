@@ -15,6 +15,7 @@
  */
 package com.jagrosh.jmusicbot.audio;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jagrosh.jmusicbot.playlist.PlaylistLoader.Playlist;
 import com.jagrosh.jmusicbot.settings.RepeatMode;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
@@ -26,10 +27,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+
 import com.jagrosh.jmusicbot.queue.FairQueue;
 import com.jagrosh.jmusicbot.settings.Settings;
 import com.jagrosh.jmusicbot.utils.FormatUtil;
@@ -205,7 +204,7 @@ public class AudioHandler extends AudioEventAdapter implements AudioSendHandler
         AudioTrackInfo info = track.getInfo();
         String id = extractYTIDRegex(info.uri);
         if(id != null){
-            String nonMusicURLString = "https://sponsor.ajay.app/api/skipSegments?videoID=" + id;
+            String nonMusicURLString = "https://sponsor.ajay.app/api/skipSegments?videoID=" + id + "&category=music_offtopic";
             HttpURLConnection con;
             String apiResponse;
             try {
@@ -215,10 +214,13 @@ public class AudioHandler extends AudioEventAdapter implements AudioSendHandler
                 if (responsecode == 200) {
                     BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
                     while ((apiResponse = in.readLine()) != null) {
-                        JSONArray segments = parseMusicJSON(apiResponse);
-                        for(int index = 0; index < segments.length(); index++){
-                            JSONArray segment = segments.getJSONObject(index).getJSONArray("segment");
-                            track.setMarker(new TrackMarker(((long) segment.get(0) * 1000), markerState -> track.setPosition(((long)segment.get(1) * 1000))));
+                        ObjectMapper m = new ObjectMapper();
+                        SponsorBlockList segments = m.readValue(apiResponse, SponsorBlockList.class);
+
+                        for(int index = 0; index < segments.size(); index++){
+                            SponsorBlock sponsorObject = segments.get(index);
+                            ArrayList<Double> segment = sponsorObject.segment;
+                            track.setMarker(new TrackMarker(((Number)(segment.get(0) * 1000)).longValue(), markerState -> track.setPosition(((Number)(segment.get(1) * 1000)).longValue())));
                         }
                     }
                     in.close();
@@ -228,11 +230,6 @@ public class AudioHandler extends AudioEventAdapter implements AudioSendHandler
             }
         }
         manager.getBot().getNowplayingHandler().onTrackUpdate(guildId, track, this);
-    }
-
-    private JSONArray parseMusicJSON(String jsonString) {
-        JSONObject obj = new JSONObject(jsonString);
-        return obj.getJSONArray("segments");
     }
     
 
