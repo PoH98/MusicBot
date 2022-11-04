@@ -19,8 +19,8 @@ import com.jagrosh.jdautilities.command.CommandEvent;
 import com.jagrosh.jmusicbot.Bot;
 import com.jagrosh.jmusicbot.audio.AudioHandler;
 import com.jagrosh.jmusicbot.audio.RequestMetadata;
+
 import com.jagrosh.jmusicbot.commands.MusicCommand;
-import net.dv8tion.jda.api.entities.User;
 
 /**
  *

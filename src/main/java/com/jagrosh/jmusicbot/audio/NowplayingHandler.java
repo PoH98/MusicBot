@@ -150,7 +150,8 @@ public class NowplayingHandler
         }
         
         // update channel topic if applicable
-        updateTopic(guildId, handler, false);
+        // nope we don't want update lol
+        //updateTopic(guildId, handler, false);
     }
     
     public void onMessageDelete(Guild guild, long messageId)
