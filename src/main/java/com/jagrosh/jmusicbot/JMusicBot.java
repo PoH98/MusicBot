@@ -20,6 +20,7 @@ import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
 import com.jagrosh.jdautilities.examples.command.*;
 import com.jagrosh.jmusicbot.commands.admin.*;
 import com.jagrosh.jmusicbot.commands.dj.*;
+import com.jagrosh.jmusicbot.commands.dj.QueueTypeCmd;
 import com.jagrosh.jmusicbot.commands.general.*;
 import com.jagrosh.jmusicbot.commands.music.*;
 import com.jagrosh.jmusicbot.commands.owner.*;
@@ -83,8 +84,8 @@ public class JMusicBot {
         Bot bot = new Bot(waiter, config, settings);
 
         AboutCommand aboutCommand = new AboutCommand(Color.BLUE.brighter(),
-                "a music bot that is [easy to host yourself!](https://github.com/jagrosh/MusicBot) (v" + OtherUtil.getCurrentVersion() + ")",
-                new String[]{"High-quality music playback", "FairQueue™ Technology", "Easy to host yourself"},
+                "MOD by PoH98, Based on JMusic Bot",
+                new String[]{"Sponsor Block", "Linear Queue", "Nyan"},
                 RECOMMENDED_PERMS);
         aboutCommand.setIsAuthor(false);
         aboutCommand.setReplacementCharacter("\uD83C\uDFB6"); // 🎶
@@ -122,6 +123,7 @@ public class JMusicBot {
                         new MoveTrackCmd(bot),
                         new PlaynextCmd(bot),
                         new SkiptoCmd(bot),
+                        new QueueTypeCmd(bot),
 
                         new PrefixCmd(bot),
                         new SetdjCmd(bot),
