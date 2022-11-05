@@ -118,11 +118,11 @@ public class JMusicBot {
                         new ForceskipCmd(bot),
                         new ForceRemoveCmd(bot),
                         new PauseCmd(bot),
+                        new QueueTypeCmd(bot),
 
                         new MoveTrackCmd(bot),
                         new PlaynextCmd(bot),
                         new SkiptoCmd(bot),
-                        new QueueTypeCmd(bot),
 
                         new PrefixCmd(bot),
                         new SetdjCmd(bot),
