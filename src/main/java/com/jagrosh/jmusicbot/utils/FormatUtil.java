@@ -15,28 +15,17 @@
  */
 package com.jagrosh.jmusicbot.utils;
 
-import java.util.List;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.VoiceChannel;
+
+import java.util.List;
 
 /**
  *
  * @author John Grosh <john.a.grosh@gmail.com>
  */
 public class FormatUtil {
-    
-    public static String formatTime(long duration)
-    {
-        if(duration == Long.MAX_VALUE)
-            return "LIVE";
-        long seconds = Math.round(duration/1000.0);
-        long hours = seconds/(60*60);
-        seconds %= 60*60;
-        long minutes = seconds/60;
-        seconds %= 60;
-        return (hours>0 ? hours+":" : "") + (minutes<10 ? "0"+minutes : minutes) + ":" + (seconds<10 ? "0"+seconds : seconds);
-    }
         
     public static String progressBar(double percent)
     {

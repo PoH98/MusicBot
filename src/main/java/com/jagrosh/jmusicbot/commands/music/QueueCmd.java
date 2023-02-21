@@ -15,12 +15,9 @@
  */
 package com.jagrosh.jmusicbot.commands.music;
 
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 import com.jagrosh.jdautilities.command.CommandEvent;
 import com.jagrosh.jdautilities.menu.Paginator;
 import com.jagrosh.jmusicbot.Bot;
-import com.jagrosh.jmusicbot.JMusicBot;
 import com.jagrosh.jmusicbot.audio.AudioHandler;
 import com.jagrosh.jmusicbot.audio.QueuedTrack;
 import com.jagrosh.jmusicbot.commands.MusicCommand;
@@ -28,10 +25,14 @@ import com.jagrosh.jmusicbot.settings.QueueType;
 import com.jagrosh.jmusicbot.settings.RepeatMode;
 import com.jagrosh.jmusicbot.settings.Settings;
 import com.jagrosh.jmusicbot.utils.FormatUtil;
+import com.jagrosh.jmusicbot.utils.TimeUtil;
 import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.exceptions.PermissionException;
+
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -113,7 +114,7 @@ public class QueueCmd extends MusicCommand
                     .append(ah.getPlayer().getPlayingTrack().getInfo().title).append("**\n");
         }
         return FormatUtil.filter(sb.append(success).append(" Current Queue | ").append(songslength)
-                .append(" entries | `").append(FormatUtil.formatTime(total)).append("` ")
+                .append(" entries | `").append(TimeUtil.formatTime(total)).append("` ")
                 .append("| ").append(queueType.getEmoji()).append(" `").append(queueType.getUserFriendlyName()).append('`')
                 .append(repeatmode.getEmoji() != null ? " | "+repeatmode.getEmoji() : "").toString());
     }
