@@ -15,7 +15,7 @@ import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioSourceManager
 
 public class CustomizedAudioSourceManager extends AudioSourceManagers {
     public static void registerCustomRemoteSources(AudioPlayerManager playerManager, MediaContainerRegistry containerRegistry, String email, String password) {
-        playerManager.registerSourceManager(new YoutubeAudioSourceManager(true, email, password));
+        playerManager.registerSourceManager(new YoutubeAudioSourceManager());
         playerManager.registerSourceManager(SoundCloudAudioSourceManager.createDefault());
         playerManager.registerSourceManager(new BandcampAudioSourceManager());
         playerManager.registerSourceManager(new VimeoAudioSourceManager());

@@ -79,29 +79,29 @@ public class AudioHandler extends AudioEventAdapter implements AudioSendHandler
         queue = type.createInstance(queue);
     }
 
-    public int addTrackToFront(QueuedTrack qtrack)
+    public int addTrackToFront(QueuedTrack track)
     {
         if(audioPlayer.getPlayingTrack()==null)
         {
-            audioPlayer.playTrack(qtrack.getTrack());
+            audioPlayer.playTrack(track.getTrack());
             return -1;
         }
         else
         {
-            queue.addAt(0, qtrack);
+            queue.addAt(0, track);
             return 0;
         }
     }
 
-    public int addTrack(QueuedTrack qtrack)
+    public int addTrack(QueuedTrack track)
     {
         if(audioPlayer.getPlayingTrack()==null)
         {
-            audioPlayer.playTrack(qtrack.getTrack());
+            audioPlayer.playTrack(track.getTrack());
             return -1;
         }
         else
-            return queue.add(qtrack);
+            return queue.add(track);
     }
 
     public AbstractQueue<QueuedTrack> getQueue()
@@ -209,14 +209,14 @@ public class AudioHandler extends AudioEventAdapter implements AudioSendHandler
         AudioTrackInfo info = track.getInfo();
         String id = extractYTIDRegex(info.uri);
         if(id != null){
-            String nonMusicURLString = "https://sponsor.ajay.app/api/skipSegments?videoID=" + id + "&category=music_offtopic";
+            String nonMusicURLString = "https://sponsor.ajay.app/api/skipSegments?videoID=" + id + "&categories=music_offtopic";
             HttpURLConnection con;
             String apiResponse;
             try {
                 con = (HttpURLConnection) new URL(nonMusicURLString).openConnection();
                 con.setRequestMethod("GET");
-                int responsecode = con.getResponseCode();
-                if (responsecode == 200) {
+                int response = con.getResponseCode();
+                if (response == 200) {
                     BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
                     while ((apiResponse = in.readLine()) != null) {
                         ObjectMapper m = new ObjectMapper();
