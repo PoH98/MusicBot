@@ -72,7 +72,8 @@ public class Listener extends ListenerAdapter
     @Override
     public void onGuildMessageDelete(GuildMessageDeleteEvent event) 
     {
-        bot.getNowplayingHandler().onMessageDelete(event.getGuild(), event.getMessageIdLong());
+        //do not do anything for avoiding suckers
+        //bot.getNowplayingHandler().onMessageDelete(event.getGuild(), event.getMessageIdLong());
     }
 
     @Override
