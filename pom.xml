@@ -29,6 +29,11 @@
             <id>jitpack</id>
             <url>https://jitpack.io</url>
         </repository>
+        <repository>
+            <id>maven_central</id>
+            <name>Maven Central</name>
+            <url>https://repo.maven.apache.org/maven2/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -50,9 +55,9 @@
             <version>jmusicbot-SNAPSHOT</version>
         </dependency>-->
         <dependency>
-            <groupId>com.github.walkyst</groupId>
-            <artifactId>lavaplayer-fork</artifactId>
-            <version>1.4.2</version>
+            <groupId>dev.arbjerg</groupId>
+            <artifactId>lavaplayer</artifactId>
+            <version>2.0.1</version>
         </dependency>
         <!-- this is needed, but isn't actually hosted anywhere anymore... uh -->
         <!--dependency>
@@ -70,7 +75,7 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.4.6</version>
+            <version>1.4.7</version>
         </dependency>
         <dependency>
             <groupId>com.typesafe</groupId>
