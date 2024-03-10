@@ -36,9 +36,9 @@ public class Settings implements GuildSettingsProvider
     private int volume;
     private String defaultPlaylist;
     private RepeatMode repeatMode;
+    private QueueType queueType;
     private String prefix;
     private double skipRatio;
-    private QueueType queueType;
 
     public Settings(SettingsManager manager, String textId, String voiceId, String roleId, int volume, String defaultPlaylist, RepeatMode repeatMode, String prefix, double skipRatio, QueueType queueType)
     {
@@ -130,20 +130,17 @@ public class Settings implements GuildSettingsProvider
         return skipRatio;
     }
 
+    public QueueType getQueueType()
+    {
+        return queueType;
+    }
+
     @Override
     public Collection<String> getPrefixes()
     {
         return prefix == null ? Collections.EMPTY_SET : Collections.singleton(prefix);
     }
-    public QueueType getQueueType()
-    {
-        return queueType;
-    }
-    public void setQueueType(QueueType queueType)
-    {
-        this.queueType = queueType;
-        this.manager.writeSettings();
-    }
+
     // Setters
     public void setTextChannel(TextChannel tc)
     {
@@ -190,6 +187,12 @@ public class Settings implements GuildSettingsProvider
     public void setSkipRatio(double skipRatio)
     {
         this.skipRatio = skipRatio;
+        this.manager.writeSettings();
+    }
+
+    public void setQueueType(QueueType queueType)
+    {
+        this.queueType = queueType;
         this.manager.writeSettings();
     }
 }

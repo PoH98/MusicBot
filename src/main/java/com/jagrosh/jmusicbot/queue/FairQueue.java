@@ -15,9 +15,7 @@
  */
 package com.jagrosh.jmusicbot.queue;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -25,20 +23,21 @@ import java.util.Set;
  * @author John Grosh (jagrosh)
  * @param <T>
  */
-public class FairQueue<T extends Queueable> extends AbstractQueue<T> {
-    private final Set<Long> set = new HashSet<>();
+public class FairQueue<T extends Queueable> extends AbstractQueue<T>
+{
     public FairQueue(AbstractQueue<T> queue)
     {
         super(queue);
     }
 
+    protected final Set<Long> set = new HashSet<>();
 
-    
+    @Override
     public int add(T item)
     {
         int lastIndex;
         for(lastIndex=list.size()-1; lastIndex>-1; lastIndex--)
-            if(list.get(lastIndex).getIdentifier()==item.getIdentifier())
+            if(list.get(lastIndex).getIdentifier() == item.getIdentifier())
                 break;
         lastIndex++;
         set.clear();
@@ -51,4 +50,5 @@ public class FairQueue<T extends Queueable> extends AbstractQueue<T> {
         list.add(lastIndex, item);
         return lastIndex;
     }
+
 }

@@ -98,14 +98,9 @@ public class NowplayingHandler
         }
         toRemove.forEach(id -> lastNP.remove(id));
     }
-    
-    public void updateTopic(long guildId, AudioHandler handler, boolean wait)
-    {
-        //do nothing
-    }
-    
-    // "event"-based methods
-    public void onTrackUpdate(long guildId, AudioTrack track, AudioHandler handler)
+
+
+    public void onTrackUpdate(AudioTrack track)
     {
         // update bot status if applicable
         if(bot.getConfig().getSongInStatus())
@@ -115,10 +110,6 @@ public class NowplayingHandler
             else
                 bot.resetGame();
         }
-        
-        // update channel topic if applicable
-        // nope we don't want update lol
-        //updateTopic(guildId, handler, false);
     }
     
     public void onMessageDelete(Guild guild, long messageId)

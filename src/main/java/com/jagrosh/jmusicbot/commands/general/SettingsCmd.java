@@ -64,9 +64,9 @@ public class SettingsCmd extends Command
                         + "\nRepeat Mode: " + (s.getRepeatMode() == RepeatMode.OFF
                                                 ? s.getRepeatMode().getUserFriendlyName()
                                                 : "**"+s.getRepeatMode().getUserFriendlyName()+"**")
-                                + "\nQueue Type: " + (s.getQueueType() == QueueType.FAIR
-                                ? s.getQueueType().getUserFriendlyName()
-                                : "**"+s.getQueueType().getUserFriendlyName()+"**")
+                        + "\nQueue Type: " + (s.getQueueType() == QueueType.FAIR
+                                                ? s.getQueueType().getUserFriendlyName()
+                                                : "**"+s.getQueueType().getUserFriendlyName()+"**")
                         + "\nDefault Playlist: " + (s.getDefaultPlaylist() == null ? "None" : "**" + s.getDefaultPlaylist() + "**")
                         )
                 .setFooter(event.getJDA().getGuilds().size() + " servers | "

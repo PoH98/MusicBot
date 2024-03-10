@@ -33,7 +33,7 @@ public class QueuedTrack implements Queueable
     public QueuedTrack(AudioTrack track, RequestMetadata rm)
     {
         this.track = track;
-        this.track.setUserData(rm);
+        this.track.setUserData(rm == null ? RequestMetadata.EMPTY : rm);
         this.requestMetadata = rm;
         if (this.track.isSeekable() && rm != null)
             track.setPosition(rm.requestInfo.startTimestamp);
@@ -42,7 +42,7 @@ public class QueuedTrack implements Queueable
     @Override
     public long getIdentifier() 
     {
-        return requestMetadata.getOwner();
+        return track.getUserData() == null ? 0L : track.getUserData(RequestMetadata.class).getOwner();
     }
     
     public AudioTrack getTrack()

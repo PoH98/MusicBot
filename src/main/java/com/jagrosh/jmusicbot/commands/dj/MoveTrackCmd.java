@@ -7,7 +7,6 @@ import com.jagrosh.jmusicbot.audio.AudioHandler;
 import com.jagrosh.jmusicbot.audio.QueuedTrack;
 import com.jagrosh.jmusicbot.commands.DJCommand;
 import com.jagrosh.jmusicbot.queue.AbstractQueue;
-import com.jagrosh.jmusicbot.queue.FairQueue;
 
 /**
  * Command that provides users the ability to move a track in the playlist.

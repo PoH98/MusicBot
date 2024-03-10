@@ -28,6 +28,14 @@ import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
 import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.*;
 import com.sedmelluq.discord.lavaplayer.track.playback.AudioFrame;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+import com.jagrosh.jmusicbot.settings.Settings;
+import com.jagrosh.jmusicbot.utils.FormatUtil;
+import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioTrack;
+import java.nio.ByteBuffer;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.MessageBuilder;
@@ -62,7 +70,6 @@ public class AudioHandler extends AudioEventAdapter implements AudioSendHandler
     private final PlayerManager manager;
     private final AudioPlayer audioPlayer;
     private final long guildId;
-
     private AudioFrame lastFrame;
 
     protected AudioHandler(PlayerManager manager, Guild guild, AudioPlayer player)
@@ -103,7 +110,7 @@ public class AudioHandler extends AudioEventAdapter implements AudioSendHandler
         else
             return queue.add(track);
     }
-
+    
     public AbstractQueue<QueuedTrack> getQueue()
     {
         return queue;
@@ -187,7 +194,7 @@ public class AudioHandler extends AudioEventAdapter implements AudioSendHandler
         {
             if(!playFromDefault())
             {
-                manager.getBot().getNowplayingHandler().onTrackUpdate(guildId, null, this);
+                manager.getBot().getNowplayingHandler().onTrackUpdate(null);
                 if(!manager.getBot().getConfig().getStay())
                     manager.getBot().closeAudioConnection(guildId);
                 // unpause, in the case when the player was paused and the track has been skipped.
@@ -206,6 +213,7 @@ public class AudioHandler extends AudioEventAdapter implements AudioSendHandler
     public void onTrackStart(AudioPlayer player, AudioTrack track)
     {
         votes.clear();
+        manager.getBot().getNowplayingHandler().onTrackUpdate(track);
         AudioTrackInfo info = track.getInfo();
         String id = extractYTIDRegex(info.uri);
         if(id != null){
@@ -234,7 +242,7 @@ public class AudioHandler extends AudioEventAdapter implements AudioSendHandler
                 System.out.printf(e.toString());
             }
         }
-        manager.getBot().getNowplayingHandler().onTrackUpdate(guildId, track, this);
+        manager.getBot().getNowplayingHandler().onTrackUpdate(track);
     }
     
 
@@ -266,17 +274,9 @@ public class AudioHandler extends AudioEventAdapter implements AudioSendHandler
             {
                 User u = guild.getJDA().getUserById(rm.user.id);
                 if(u==null)
-                    if(rm.user.discrim.equals("0000")) {
-                        eb.setAuthor(rm.user.username, null, rm.user.avatar);
-                    } else {
-                        eb.setAuthor(rm.user.username + "#" + rm.user.discrim, null, rm.user.avatar);
-                    }
+                    eb.setAuthor(FormatUtil.formatUsername(rm.user), null, rm.user.avatar);
                 else
-                if(u.getDiscriminator().equals("0000")) {
-                    eb.setAuthor(u.getName(), null, u.getEffectiveAvatarUrl());
-                } else {
-                    eb.setAuthor(u.getName() + "#" + u.getDiscriminator(), null, u.getEffectiveAvatarUrl());
-                }
+                    eb.setAuthor(FormatUtil.formatUsername(u), null, u.getEffectiveAvatarUrl());
             }
 
             try

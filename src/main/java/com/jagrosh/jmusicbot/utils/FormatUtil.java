@@ -15,8 +15,11 @@
  */
 package com.jagrosh.jmusicbot.utils;
 
+import com.jagrosh.jmusicbot.audio.RequestMetadata.UserInfo;
+import java.util.List;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 
 import java.util.List;
@@ -26,6 +29,38 @@ import java.util.List;
  * @author John Grosh <john.a.grosh@gmail.com>
  */
 public class FormatUtil {
+    public static String formatTime(long duration)
+    {
+        if(duration == Long.MAX_VALUE)
+            return "LIVE";
+        long seconds = Math.round(duration/1000.0);
+        long hours = seconds/(60*60);
+        seconds %= 60*60;
+        long minutes = seconds/60;
+        seconds %= 60;
+        return (hours>0 ? hours+":" : "") + (minutes<10 ? "0"+minutes : minutes) + ":" + (seconds<10 ? "0"+seconds : seconds);
+    }
+    public static String formatUsername(String username, String discrim) 
+    {
+        if(discrim == null || discrim.equals("0000")) 
+        {
+            return username;
+        }
+        else 
+        {
+            return username + "#" + discrim;
+        }
+    }
+    
+    public static String formatUsername(UserInfo userinfo)
+    {
+        return formatUsername(userinfo.username, userinfo.discrim);
+    }
+    
+    public static String formatUsername(User user)
+    {
+        return formatUsername(user.getName(), user.getDiscriminator());
+    }
         
     public static String progressBar(double percent)
     {
@@ -48,6 +83,8 @@ public class FormatUtil {
             return "\uD83D\uDD09"; // 🔉
         return "\uD83D\uDD0A";     // 🔊
     }
+
+
     
     public static String listOfTChannels(List<TextChannel> list, String query)
     {
