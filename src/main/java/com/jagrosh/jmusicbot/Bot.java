@@ -18,10 +18,7 @@ package com.jagrosh.jmusicbot;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
-import com.jagrosh.jmusicbot.audio.AloneInVoiceHandler;
-import com.jagrosh.jmusicbot.audio.AudioHandler;
-import com.jagrosh.jmusicbot.audio.NowplayingHandler;
-import com.jagrosh.jmusicbot.audio.PlayerManager;
+import com.jagrosh.jmusicbot.audio.*;
 import com.jagrosh.jmusicbot.gui.GUI;
 import com.jagrosh.jmusicbot.playlist.PlaylistLoader;
 import com.jagrosh.jmusicbot.settings.SettingsManager;
@@ -41,6 +38,7 @@ public class Bot
     private final BotConfig config;
     private final SettingsManager settings;
     private final PlayerManager players;
+    private final EffectManager effect;
     private final PlaylistLoader playlists;
     private final NowplayingHandler nowplaying;
     private final AloneInVoiceHandler aloneInVoiceHandler;
@@ -62,8 +60,11 @@ public class Bot
         this.nowplaying.init();
         this.aloneInVoiceHandler = new AloneInVoiceHandler(this);
         this.aloneInVoiceHandler.init();
+        this.effect = new EffectManager();
     }
-    
+    public EffectManager getEffectManager() {
+        return  effect;
+    }
     public BotConfig getConfig()
     {
         return config;

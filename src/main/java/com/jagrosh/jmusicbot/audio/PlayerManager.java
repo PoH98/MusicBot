@@ -16,11 +16,14 @@
 package com.jagrosh.jmusicbot.audio;
 
 import com.dunctebot.sourcemanagers.DuncteBotSources;
+import com.github.natanbc.lavadsp.timescale.TimescalePcmAudioFilter;
 import com.jagrosh.jmusicbot.Bot;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioSourceManager;
 import net.dv8tion.jda.api.entities.Guild;
+
+import java.util.Collections;
 
 /**
  *
@@ -38,10 +41,9 @@ public class PlayerManager extends DefaultAudioPlayerManager
     public void init()
     {
         TransformativeAudioSourceManager.createTransforms(bot.getConfig().getTransforms()).forEach(t -> registerSourceManager(t));
-        CustomizedAudioSourceManager.registerRemoteSources(this);
+        CustomizedAudioSourceManager.registerCustomRemoteSources(this);
         CustomizedAudioSourceManager.registerLocalSource(this);
         DuncteBotSources.registerAll(this, "en-US");
-        source(YoutubeAudioSourceManager.class).setPlaylistPageCount(10);
     }
 
     public Bot getBot()
@@ -61,6 +63,8 @@ public class PlayerManager extends DefaultAudioPlayerManager
         {
             AudioPlayer player = createPlayer();
             player.setVolume(bot.getSettingsManager().getSettings(guild).getVolume());
+            player.setFilterFactory((track, format, output) ->getBot().getEffectManager().setAudioSpeedManager(bot.getSettingsManager().getSettings(guild).getPlaybackSpeed(), output, format));
+            player.setFrameBufferDuration(500);
             handler = new AudioHandler(this, guild, player);
             player.addListener(handler);
             guild.getAudioManager().setSendingHandler(handler);

@@ -40,7 +40,9 @@ public class Settings implements GuildSettingsProvider
     private String prefix;
     private double skipRatio;
 
-    public Settings(SettingsManager manager, String textId, String voiceId, String roleId, int volume, String defaultPlaylist, RepeatMode repeatMode, String prefix, double skipRatio, QueueType queueType)
+    private double playbackSpeed;
+
+    public Settings(SettingsManager manager, String textId, String voiceId, String roleId, int volume, String defaultPlaylist, RepeatMode repeatMode, String prefix, double skipRatio, double playbackSpeed, QueueType queueType)
     {
         this.manager = manager;
         try
@@ -72,10 +74,12 @@ public class Settings implements GuildSettingsProvider
         this.repeatMode = repeatMode;
         this.prefix = prefix;
         this.skipRatio = skipRatio;
+        this.playbackSpeed = playbackSpeed;
         this.queueType = queueType;
+
     }
     
-    public Settings(SettingsManager manager, long textId, long voiceId, long roleId, int volume, String defaultPlaylist, RepeatMode repeatMode, String prefix, double skipRatio, QueueType queueType)
+    public Settings(SettingsManager manager, long textId, long voiceId, long roleId, int volume, String defaultPlaylist, RepeatMode repeatMode, String prefix, double skipRatio, double playbackSpeed, QueueType queueType)
     {
         this.manager = manager;
         this.textId = textId;
@@ -86,6 +90,7 @@ public class Settings implements GuildSettingsProvider
         this.repeatMode = repeatMode;
         this.prefix = prefix;
         this.skipRatio = skipRatio;
+        this.playbackSpeed = playbackSpeed;
         this.queueType = queueType;
     }
     
@@ -128,6 +133,10 @@ public class Settings implements GuildSettingsProvider
     public double getSkipRatio()
     {
         return skipRatio;
+    }
+
+    public double getPlaybackSpeed() {
+        return playbackSpeed;
     }
 
     public QueueType getQueueType()
@@ -194,5 +203,9 @@ public class Settings implements GuildSettingsProvider
     {
         this.queueType = queueType;
         this.manager.writeSettings();
+    }
+
+    public void setPlaybackSpeed(double playbackSpeed) {
+        this.playbackSpeed = playbackSpeed;
     }
 }

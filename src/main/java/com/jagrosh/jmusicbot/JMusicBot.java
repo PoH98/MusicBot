@@ -25,6 +25,7 @@ import com.jagrosh.jmusicbot.commands.dj.MoveTrackCmd;
 import com.jagrosh.jmusicbot.commands.dj.PlaynextCmd;
 import com.jagrosh.jmusicbot.commands.dj.SkiptoCmd;
 import com.jagrosh.jmusicbot.commands.general.SettingsCmd;
+import com.jagrosh.jmusicbot.commands.music.SpeedCmd;
 import com.jagrosh.jmusicbot.commands.music.*;
 import com.jagrosh.jmusicbot.commands.owner.*;
 import com.jagrosh.jmusicbot.entities.Prompt;
@@ -201,6 +202,7 @@ public class JMusicBot {
                         new ForceRemoveCmd(bot),
                         new PauseCmd(bot),
                         new SeekCmd(bot),
+                        new SpeedCmd(bot),
 
                         new MoveTrackCmd(bot),
                         new PlaynextCmd(bot),

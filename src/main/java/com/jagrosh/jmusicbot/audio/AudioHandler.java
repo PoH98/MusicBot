@@ -16,6 +16,7 @@
 package com.jagrosh.jmusicbot.audio;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.natanbc.lavadsp.timescale.TimescalePcmAudioFilter;
 import com.jagrosh.jmusicbot.playlist.PlaylistLoader.Playlist;
 import com.jagrosh.jmusicbot.queue.AbstractQueue;
 import com.jagrosh.jmusicbot.settings.QueueType;
@@ -77,7 +78,6 @@ public class AudioHandler extends AudioEventAdapter implements AudioSendHandler
         this.manager = manager;
         this.audioPlayer = player;
         this.guildId = guild.getIdLong();
-
         this.setQueueType(manager.getBot().getSettingsManager().getSettings(guildId).getQueueType());
     }
 
@@ -217,7 +217,7 @@ public class AudioHandler extends AudioEventAdapter implements AudioSendHandler
         AudioTrackInfo info = track.getInfo();
         String id = extractYTIDRegex(info.uri);
         if(id != null){
-            String nonMusicURLString = "https://sponsor.ajay.app/api/skipSegments?videoID=" + id + "&categories=music_offtopic";
+            String nonMusicURLString = "https://sponsor.ajay.app/api/skipSegments?videoID=" + id + "&categories=[\"music_offtopic\",\"selfpromo\",\"sponsor\"]";
             HttpURLConnection con;
             String apiResponse;
             try {
@@ -299,7 +299,7 @@ public class AudioHandler extends AudioEventAdapter implements AudioSendHandler
             double progress = (double)audioPlayer.getPlayingTrack().getPosition()/track.getDuration();
             eb.setDescription(getStatusEmoji()
                     + " "+FormatUtil.progressBar(progress)
-                    + " `[" + TimeUtil.formatTime(track.getPosition()) + "/" + TimeUtil.formatTime(track.getDuration()) + "]` "
+                    + " `[" + TimeUtil.formatTime(track.getPosition()) + "/" + TimeUtil.formatTime(Math.round(track.getDuration() / manager.getBot().getEffectManager().getSpeed())) + "]` "
                     + FormatUtil.volumeIcon(audioPlayer.getVolume()));
 
             return mb.setEmbeds(eb.build()).build();
