@@ -63,7 +63,10 @@ public class PlayerManager extends DefaultAudioPlayerManager
         {
             AudioPlayer player = createPlayer();
             player.setVolume(bot.getSettingsManager().getSettings(guild).getVolume());
-            player.setFilterFactory((track, format, output) ->getBot().getEffectManager().setAudioSpeedManager(bot.getSettingsManager().getSettings(guild).getPlaybackSpeed(), output, format));
+            var speed = bot.getSettingsManager().getSettings(guild).getPlaybackSpeed();
+            player.setFilterFactory((track, format, output) ->
+                    getBot().getEffectManager().setAudioEffect(speed, output, format)
+            );
             player.setFrameBufferDuration(500);
             handler = new AudioHandler(this, guild, player);
             player.addListener(handler);
