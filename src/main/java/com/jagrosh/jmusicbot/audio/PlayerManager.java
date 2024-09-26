@@ -16,6 +16,7 @@
 package com.jagrosh.jmusicbot.audio;
 
 import com.dunctebot.sourcemanagers.DuncteBotSources;
+import com.jagrosh.jmusicbot.utils.OtherUtil;
 import com.sedmelluq.discord.lavaplayer.container.MediaContainerRegistry;
 import com.jagrosh.jmusicbot.Bot;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
@@ -32,6 +33,12 @@ import com.sedmelluq.discord.lavaplayer.source.nico.NicoAudioSourceManager;
 import com.sedmelluq.discord.lavaplayer.source.soundcloud.SoundCloudAudioSourceManager;
 import com.sedmelluq.discord.lavaplayer.source.twitch.TwitchStreamAudioSourceManager;
 import com.sedmelluq.discord.lavaplayer.source.vimeo.VimeoAudioSourceManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 
 /**
  *
@@ -40,7 +47,7 @@ import com.sedmelluq.discord.lavaplayer.source.vimeo.VimeoAudioSourceManager;
 public class PlayerManager extends DefaultAudioPlayerManager
 {
     private final Bot bot;
-
+    private final static Logger LOGGER = LoggerFactory.getLogger(PlayerManager.class);
     public PlayerManager(Bot bot)
     {
         this.bot = bot;
@@ -49,8 +56,42 @@ public class PlayerManager extends DefaultAudioPlayerManager
     public void init()
     {
         TransformativeAudioSourceManager.createTransforms(bot.getConfig().getTransforms()).forEach(this::registerSourceManager);
-
-        registerSourceManager(new YoutubeAudioSourceManager(true, new TvHtml5Embedded()));
+        YoutubeAudioSourceManager yt = new YoutubeAudioSourceManager(true);
+        if (bot.getConfig().useYoutubeOauth2())
+        {
+            String token = null;
+            try
+            {
+                token = Files.readString(OtherUtil.getPath("youtubetoken.txt"));
+            }
+            catch (NoSuchFileException e)
+            {
+                /* ignored */
+            }
+            catch (IOException e)
+            {
+                LOGGER.warn("Failed to read YouTube OAuth2 token file: {}",e.getMessage());
+            }
+            do{
+                try
+                {
+                    yt.useOauth2(token, false);
+                    break;
+                }
+                catch (Exception e)
+                {
+                    LOGGER.warn("Failed to authorize with YouTube. Removing token file.", e);
+                    try{
+                        Files.deleteIfExists(OtherUtil.getPath("youtubetoken.txt"));
+                    }
+                    catch (IOException ex) {
+                        /* ignored */
+                    }
+                }
+            }
+            while(true);
+        }
+        registerSourceManager(yt);
 
         registerSourceManager(SoundCloudAudioSourceManager.createDefault());
         registerSourceManager(new BandcampAudioSourceManager());
