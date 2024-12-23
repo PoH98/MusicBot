@@ -16,19 +16,18 @@
 package com.jagrosh.jmusicbot.audio;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.natanbc.lavadsp.timescale.TimescalePcmAudioFilter;
 import com.jagrosh.jmusicbot.playlist.PlaylistLoader.Playlist;
 import com.jagrosh.jmusicbot.queue.AbstractQueue;
 import com.jagrosh.jmusicbot.settings.QueueType;
-import com.jagrosh.jmusicbot.settings.RepeatMode;
-import com.jagrosh.jmusicbot.settings.Settings;
-import com.jagrosh.jmusicbot.utils.FormatUtil;
 import com.jagrosh.jmusicbot.utils.TimeUtil;
+import com.jagrosh.jmusicbot.settings.RepeatMode;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
-import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioTrack;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
-import com.sedmelluq.discord.lavaplayer.track.*;
+import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
+import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
+import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
+import com.sedmelluq.discord.lavaplayer.track.TrackMarker;
 import com.sedmelluq.discord.lavaplayer.track.playback.AudioFrame;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -51,7 +50,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.ByteBuffer;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -324,23 +322,6 @@ public class AudioHandler extends AudioEventAdapter implements AudioSendHandler
                         .setDescription(STOP_EMOJI+" "+FormatUtil.progressBar(-1)+" "+FormatUtil.volumeIcon(audioPlayer.getVolume()))
                         .setColor(guild.getSelfMember().getColor())
                         .build()).build();
-    }
-
-    public String getTopicFormat(JDA jda)
-    {
-        if(isMusicPlaying(jda))
-        {
-            long userid = getRequestMetadata().getOwner();
-            AudioTrack track = audioPlayer.getPlayingTrack();
-            String title = track.getInfo().title;
-            if(title==null || title.equals("Unknown Title"))
-                title = track.getInfo().uri;
-            return "**"+title+"** ["+(userid==0 ? "autoplay" : "<@"+userid+">")+"]"
-                    + "\n" + getStatusEmoji() + " "
-                    + "[" + TimeUtil.formatTime(track.getDuration()) + "] "
-                    + FormatUtil.volumeIcon(audioPlayer.getVolume());
-        }
-        else return "No music playing " + STOP_EMOJI + " " + FormatUtil.volumeIcon(audioPlayer.getVolume());
     }
 
     public String getStatusEmoji()

@@ -16,10 +16,10 @@
 package com.jagrosh.jmusicbot.audio;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
-import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioSourceManager;
 import com.sedmelluq.discord.lavaplayer.track.AudioItem;
 import com.sedmelluq.discord.lavaplayer.track.AudioReference;
 import com.typesafe.config.Config;
+import dev.lavalink.youtube.YoutubeAudioSourceManager;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
@@ -38,12 +38,12 @@ public class TransformativeAudioSourceManager extends YoutubeAudioSourceManager
 {
     private final static Logger log = LoggerFactory.getLogger(TransformativeAudioSourceManager.class);
     private final String name, regex, replacement, selector, format;
-    
+
     public TransformativeAudioSourceManager(String name, Config object)
     {
         this(name, object.getString("regex"), object.getString("replacement"), object.getString("selector"), object.getString("format"));
     }
-    
+
     public TransformativeAudioSourceManager(String name, String regex, String replacement, String selector, String format)
     {
         this.name = name;
@@ -86,7 +86,7 @@ public class TransformativeAudioSourceManager extends YoutubeAudioSourceManager
         }
         return null;
     }
-    
+
     public static List<TransformativeAudioSourceManager> createTransforms(Config transforms)
     {
         try

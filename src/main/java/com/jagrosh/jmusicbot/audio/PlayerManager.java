@@ -19,11 +19,16 @@ import com.dunctebot.sourcemanagers.DuncteBotSources;
 import com.jagrosh.jmusicbot.utils.OtherUtil;
 import com.sedmelluq.discord.lavaplayer.container.MediaContainerRegistry;
 import com.jagrosh.jmusicbot.Bot;
+
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
 import dev.lavalink.youtube.YoutubeAudioSourceManager;
+import dev.lavalink.youtube.clients.Tv;
 import dev.lavalink.youtube.clients.TvHtml5Embedded;
+import dev.lavalink.youtube.clients.Web;
+import dev.lavalink.youtube.clients.WebEmbedded;
+import dev.lavalink.youtube.clients.skeleton.Client;
 import net.dv8tion.jda.api.entities.Guild;
 import com.sedmelluq.discord.lavaplayer.source.bandcamp.BandcampAudioSourceManager;
 import com.sedmelluq.discord.lavaplayer.source.beam.BeamAudioSourceManager;
@@ -55,8 +60,8 @@ public class PlayerManager extends DefaultAudioPlayerManager
 
     public void init()
     {
-        TransformativeAudioSourceManager.createTransforms(bot.getConfig().getTransforms()).forEach(this::registerSourceManager);
-        YoutubeAudioSourceManager yt = new YoutubeAudioSourceManager(true);
+        YoutubeAudioSourceManager yt = new YoutubeAudioSourceManager(true, new Tv(), new TvHtml5Embedded(), new Web());
+        yt.setPlaylistPageCount(10);
         if (bot.getConfig().useYoutubeOauth2())
         {
             String token = null;
@@ -75,7 +80,12 @@ public class PlayerManager extends DefaultAudioPlayerManager
             do{
                 try
                 {
-                    yt.useOauth2(token, false);
+                    if(token != null){
+                        yt.useOauth2(token, true);
+                    }
+                    else {
+                        yt.useOauth2(null, false);
+                    }
                     break;
                 }
                 catch (Exception e)
@@ -105,8 +115,6 @@ public class PlayerManager extends DefaultAudioPlayerManager
         AudioSourceManagers.registerLocalSource(this);
 
         DuncteBotSources.registerAll(this, "en-US");
-
-        source(YoutubeAudioSourceManager.class).setPlaylistPageCount(10);
     }
 
     public Bot getBot()
