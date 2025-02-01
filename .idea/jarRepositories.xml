@@ -22,6 +22,11 @@
       <option name="url" value="https://maven.lavalink.dev/releases" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="arbjerg" />
+      <option name="name" value="arbjerg" />
+      <option name="url" value="http://maven.arbjerg.dev/releases" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="arbjergDev-snapshots" />
       <option name="name" value="Lavalink Repository" />
       <option name="url" value="https://maven.lavalink.dev/snapshots" />
