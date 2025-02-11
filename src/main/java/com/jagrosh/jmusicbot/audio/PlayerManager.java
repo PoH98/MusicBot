@@ -24,10 +24,7 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
 import dev.lavalink.youtube.YoutubeAudioSourceManager;
-import dev.lavalink.youtube.clients.Tv;
-import dev.lavalink.youtube.clients.TvHtml5Embedded;
-import dev.lavalink.youtube.clients.Web;
-import dev.lavalink.youtube.clients.WebEmbedded;
+import dev.lavalink.youtube.clients.*;
 import dev.lavalink.youtube.clients.skeleton.Client;
 import net.dv8tion.jda.api.entities.Guild;
 import com.sedmelluq.discord.lavaplayer.source.bandcamp.BandcampAudioSourceManager;
@@ -60,7 +57,7 @@ public class PlayerManager extends DefaultAudioPlayerManager
 
     public void init()
     {
-        YoutubeAudioSourceManager yt = new YoutubeAudioSourceManager(true, new Tv(), new TvHtml5Embedded());
+        YoutubeAudioSourceManager yt = new YoutubeAudioSourceManager(true, new Tv(), new TvHtml5Embedded(), new AndroidVr());
         yt.setPlaylistPageCount(10);
         if (bot.getConfig().useYoutubeOauth2())
         {
