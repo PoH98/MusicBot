@@ -57,7 +57,7 @@ public class PlayerManager extends DefaultAudioPlayerManager
 
     public void init()
     {
-        YoutubeAudioSourceManager yt = new YoutubeAudioSourceManager(true, new Tv(), new TvHtml5Embedded(), new AndroidVr());
+        YoutubeAudioSourceManager yt = new YoutubeAudioSourceManager(true, new Tv(), new TvHtml5Embedded(), new Web());
         yt.setPlaylistPageCount(10);
         if (bot.getConfig().useYoutubeOauth2())
         {
