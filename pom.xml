@@ -18,6 +18,13 @@
             <url>https://jcenter.bintray.com</url>
         </repository>
         <repository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/lavalink-devs/*</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
             <snapshots>
@@ -60,9 +67,9 @@
             <version>2.2.3</version>
         </dependency>
         <dependency>
-            <groupId>dev.lavalink.youtube</groupId>
+            <groupId>com.github.lavalink-devs.youtube-source</groupId>
             <artifactId>common</artifactId>
-            <version>1.12.0</version>
+            <version>0e5cfca4e8</version>
         </dependency>
         <dependency>
             <groupId>dev.arbjerg</groupId>
@@ -72,7 +79,7 @@
         <dependency>
             <groupId>com.github.jagrosh</groupId>
             <artifactId>JLyrics</artifactId>
-            <version>master-SNAPSHOT</version>
+            <version>c7a9b3f0aa</version>
         </dependency>
         <dependency>
             <groupId>com.dunctebot</groupId>
